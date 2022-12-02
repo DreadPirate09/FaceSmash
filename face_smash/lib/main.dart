@@ -56,6 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 height: 400,
                 fit: BoxFit.cover,
               ),
+              Text("The guy number 1",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ))
             ]),
           ),
           Padding(
@@ -68,6 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 400,
                     fit: BoxFit.cover,
                   ),
+                  Text("The guy number 2",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ))
                 ],
               )),
         ],

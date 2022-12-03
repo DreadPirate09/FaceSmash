@@ -1,6 +1,20 @@
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:face_smash/storage_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyDSX_cB0dfNrO85CQP9WwXSU9PXPGQsIRk",
+        appId: "1:492296649989:android:a529aaf721c62e8f3f8b6c",
+        messagingSenderId: "2707901048",
+        projectId: "face-smash-b3479",
+        storageBucket: "face-smash-b3479.appspot.com"),
+  );
   runApp(const MyApp());
 }
 
@@ -39,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Storage storage = Storage();
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -67,19 +82,65 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(40.0),
               child: Column(
                 children: [
-                  Ink.image(
-                    image: const NetworkImage(
-                        'https://scontent.fclj1-2.fna.fbcdn.net/v/t31.18172-8/13913813_992246950890777_1554047631026260258_o.jpg?_nc_cat=107&ccb=1-7&_nc_sid=174925&_nc_ohc=Ov3UobRM5EAAX-6GvKC&_nc_ht=scontent.fclj1-2.fna&oh=00_AfCJdTqjWFhr9kTg1hjZudYgNx-fWlAR-IImONs91OkVDQ&oe=63B05BCD'),
-                    height: 400,
-                    fit: BoxFit.cover,
+                  Center(
+                    child: Ink.image(
+                      image: const NetworkImage(
+                          'https://scontent.fclj1-2.fna.fbcdn.net/v/t31.18172-8/13913813_992246950890777_1554047631026260258_o.jpg?_nc_cat=107&ccb=1-7&_nc_sid=174925&_nc_ohc=Ov3UobRM5EAAX-6GvKC&_nc_ht=scontent.fclj1-2.fna&oh=00_AfCJdTqjWFhr9kTg1hjZudYgNx-fWlAR-IImONs91OkVDQ&oe=63B05BCD'),
+                      height: 400,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  Text("The guy number 2",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ))
+                  Center(
+                      child: Text("The guy number 2",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        final results = await FilePicker.platform.pickFiles(
+                          allowMultiple: false,
+                          type: FileType.custom,
+                          allowedExtensions: ['png', 'jpg'],
+                        );
+
+                        if (results == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('No file selected.'),
+                            ),
+                          );
+                          return null;
+                        }
+                      },
+                      child: const Text('uplod img'),
+                    ),
+                  )
                 ],
               )),
+          FutureBuilder(
+              future: storage.downloadURL('acsdcasdcasd.PNG'),
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                print(snapshot.connectionState);
+                print(snapshot.hasData);
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  return Container(
+                    width: 300,
+                    height: 250,
+                    child: Image.network(
+                      snapshot.data!,
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting ||
+                    !snapshot.hasData) {
+                  return CircularProgressIndicator();
+                }
+                return Container();
+              })
         ],
       )),
     );

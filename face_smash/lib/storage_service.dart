@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'dart:developer';
 
 class Storage {
   final firebase_storage.FirebaseStorage storage =
@@ -16,8 +17,8 @@ class Storage {
   }
 
   Future<String> downloadURL(String imageName) async {
-    String downloadURL = await storage.ref('test/$imageName').getDownloadURL();
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-    return downloadURL;
+    var downloadURL = await storage.ref().child("test/" + imageName);
+    var url = await downloadURL.getDownloadURL();
+    return url;
   }
 }

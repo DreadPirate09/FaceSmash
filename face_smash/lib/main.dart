@@ -1,5 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
@@ -8,13 +9,14 @@ import 'package:face_smash/storage_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-        apiKey: "AIzaSyDSX_cB0dfNrO85CQP9WwXSU9PXPGQsIRk",
-        appId: "1:492296649989:android:a529aaf721c62e8f3f8b6c",
-        messagingSenderId: "2707901048",
-        projectId: "face-smash-b3479",
-        storageBucket: "face-smash-b3479.appspot.com"),
-  );
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyDSX_cB0dfNrO85CQP9WwXSU9PXPGQsIRk",
+          appId: "1:492296649989:android:a529aaf721c62e8f3f8b6c",
+          messagingSenderId: "492296649989",
+          projectId: "face-smash-b3479",
+          storageBucket: "face-smash-b3479.appspot.com",
+          authDomain:
+              "492296649989-lh178b7si4b5didnp355pooq09ag7hsh.apps.googleusercontent.com"));
   runApp(const MyApp());
 }
 
@@ -120,8 +122,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               )),
           FutureBuilder(
-              future: storage.downloadURL('acsdcasdcasd.PNG'),
+              future: storage.downloadURL('img2.PNG'),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                final ref =
+                    FirebaseStorage.instance.ref().child('test/img2.PNG');
+                // no need of the file extension, the name will do fine.
+                var url = ref.getDownloadURL();
+                print(url);
                 print(snapshot.connectionState);
                 print(snapshot.hasData);
                 if (snapshot.connectionState == ConnectionState.done &&

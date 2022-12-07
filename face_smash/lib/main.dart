@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:face_smash/names_mapper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -60,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final Storage storage = Storage();
     final Counter counter = Counter.instance;
+    final NamesMapper names = NamesMapper();
+    String name1 = "none";
+    String name2 = "none";
     int counter1 = counter.get() as int;
     int counter2 = (counter.get() as int) + 1;
     return Scaffold(
@@ -156,16 +160,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               )),
           FutureBuilder(
-              future: storage.downloadURL('img4.jpg'),
+              future: names.downloadUrl(counter1),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
                   return Container(
                     width: 300,
                     height: 250,
-                    child: Image.network(
-                      snapshot.data!,
-                      fit: BoxFit.cover,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        counter2 += 1;
+                      },
+                      child: Text('uplod img$snapshot'),
                     ),
                   );
                 }

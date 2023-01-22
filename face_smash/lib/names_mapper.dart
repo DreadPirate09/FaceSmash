@@ -4,9 +4,11 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'dart:developer';
 
-class Storage {
+class NamesMapper {
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
+
+  String nameFile = "names.txt";
 
   Future<firebase_storage.ListResult> listFiles() async {
     firebase_storage.ListResult results = await storage.ref('test').listAll();

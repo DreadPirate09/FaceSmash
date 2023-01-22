@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                     print(counter1);
                   },
-                  child: Text('uplod img$counter1'),
+                  child: Text('This is the guy nr $counter1'),
                 ),
               ),
             ]),
@@ -154,13 +154,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () async {
                         counter2 += 1;
                       },
-                      child: Text('uplod img$counter2'),
+                      child: Text('This is the guy nr $counter2'),
                     ),
                   )
                 ],
               )),
           FutureBuilder(
-              future: names.downloadUrl(counter1),
+              future: names.downloadURL('map_names.txt'),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
@@ -171,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () async {
                         counter2 += 1;
                       },
-                      child: Text('uplod img$snapshot'),
+                      child: Text(snapshot.data!.characters.string),
                     ),
                   );
                 }

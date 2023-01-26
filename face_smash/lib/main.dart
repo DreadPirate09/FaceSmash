@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               )),
           FutureBuilder(
-              future: names.downloadURL('map_names.txt'),
+              future: storage.downloadURL('img6.jpg'),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done &&
                     snapshot.hasData) {
@@ -169,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 250,
                     child: ElevatedButton(
                       onPressed: () async {
-                        counter2 += 1;
+                        counter.incrementCounter();
                       },
                       child: Text(snapshot.data!.characters.string),
                     ),

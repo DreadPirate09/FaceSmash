@@ -49,13 +49,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  // void _incrementCounter() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
-                        counter2 += 1;
+                        counter.incrementCounter();
                       },
                       child: Text('This is the guy nr $counter2'),
                     ),

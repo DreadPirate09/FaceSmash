@@ -1,1 +1,1 @@
-use : flutter run -d chrome --web-renderer html in order to run the project locally
+flutter run -d chrome --web-renderer html // in order to run the project locally

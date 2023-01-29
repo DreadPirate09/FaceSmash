@@ -99,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Container();
                   }),
               Center(
-                  child: Text('The guy number $counter1',
+                  child: Text(counter.getName(counter1),
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                     print(counter1);
                   },
-                  child: Text('This is the guy nr $counter1'),
+                  child: Text('SMASH'),
                 ),
               ),
             ]),
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         return Container();
                       }),
                   Center(
-                      child: Text('The guy number $counter2',
+                      child: Text(counter.getName(counter2),
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () async {
                         counter.incrementCounter();
                       },
-                      child: Text('This is the guy nr $counter2'),
+                      child: Text('SMASH'),
                     ),
                   )
                 ],

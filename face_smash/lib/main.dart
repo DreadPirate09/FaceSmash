@@ -151,36 +151,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           ))),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () async {
-                        counter.incrementCounter();
+                      onPressed: () {
+                        setState(() {
+                          counter.incrementCounter();
+                        });
+                        print(counter1);
                       },
                       child: Text('SMASH'),
                     ),
                   )
                 ],
               )),
-          FutureBuilder(
-              future: storage.downloadURL('img6.jpg'),
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  return Container(
-                    width: 300,
-                    height: 250,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        counter.incrementCounter();
-                      },
-                      child: Text(snapshot.data!.characters.string),
-                    ),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.hasData) {
-                  return CircularProgressIndicator();
-                }
-                return Container();
-              })
         ],
       )),
     );

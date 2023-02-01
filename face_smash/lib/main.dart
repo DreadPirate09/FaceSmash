@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                     print(counter1);
                   },
-                  child: Text('SMASH'),
+                  child: Text('SMASH THE GUY'),
                 ),
               ),
             ]),
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                         print(counter1);
                       },
-                      child: Text('SMASH'),
+                      child: Text('SMASH THE GUY'),
                     ),
                   )
                 ],

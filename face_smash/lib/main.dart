@@ -64,8 +64,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final NamesMapper names = NamesMapper();
     String name1 = "none";
     String name2 = "none";
-    int counter1 = counter.get() as int;
-    int counter2 = (counter.get() as int) + 1;
+    int counter1 = counter.get1() as int;
+    int counter2 = counter.get2() as int;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -108,11 +108,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      counter.incrementCounter();
+                      counter.incrementCounter2();
                     });
                     print(counter1);
                   },
-                  child: Text('SMASH THE GUY'),
+                  child: Text('SMASH ${counter.getName(counter1)}'),
                 ),
               ),
             ]),
@@ -153,11 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          counter.incrementCounter();
+                          counter.incrementCounter1();
                         });
                         print(counter1);
                       },
-                      child: Text('SMASH THE GUY'),
+                      child: Text('SMASH ${counter.getName(counter2)}'),
                     ),
                   )
                 ],

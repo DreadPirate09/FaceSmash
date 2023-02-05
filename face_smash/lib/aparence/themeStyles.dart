@@ -1,0 +1,1 @@
+enum themeStyles { DARK, LIGHT }

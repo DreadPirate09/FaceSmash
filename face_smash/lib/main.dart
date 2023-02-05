@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:face_smash/aparence/themeStyles.dart';
 import 'package:face_smash/names_mapper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:face_smash/storage_service.dart';
 import 'package:face_smash/counter.dart';
+import 'package:face_smash/aparence/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,22 +26,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-bool _iconBool = true;
-
-IconData _iconLight = Icons.wb_sunny;
-IconData _iconDark = Icons.nights_stay;
-
-ThemeData _lightTheme = ThemeData(
-  primarySwatch: Colors.amber,
-  brightness: Brightness.light,
-);
-
-ThemeData _darkTheme = ThemeData(
-  primarySwatch: Colors.red,
-  brightness: Brightness.dark,
-);
-
-ThemeData _theme1 = _lightTheme;
+AppTheme theme = AppTheme(themeStyles.LIGHT);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -47,11 +34,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: _iconBool ? _lightTheme : _darkTheme,
-      home: const MyHomePage(title: 'Face Smash Poli'),
-    );
+    return const MyHomePage(title: 'Face Smash Poli');
   }
 }
 
@@ -73,74 +56,33 @@ class _MyHomePageState extends State<MyHomePage> {
     String name2 = "none";
     int counter1 = counter.get1() as int;
     int counter2 = counter.get2() as int;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                _iconBool = !_iconBool;
-              });
-              print(_iconBool);
-            },
-            icon: Icon(_iconBool ? _iconDark : _iconLight),
-          ),
-        ],
-      ),
-      body: Center(
-          child: GridView.count(
-        crossAxisCount: 2,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(40.0),
-            child: Column(children: [
-              FutureBuilder(
-                  future: storage.downloadURL('img$counter1.jpg'),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      return Container(
-                        width: 400,
-                        height: 400,
-                        child: Image.network(
-                          snapshot.data!,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting ||
-                        !snapshot.hasData) {
-                      return CircularProgressIndicator();
-                    }
-                    return Container();
-                  }),
-              Center(
-                  child: Text(counter.getName(counter1),
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ))),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      counter.incrementCounter2();
-                    });
-                    print(counter1);
-                  },
-                  child: Text('SMASH ${counter.getName(counter1)}'),
-                ),
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: theme.getCurrentTheme(),
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    theme.switchTheme();
+                  });
+                },
+                icon: Icon(theme.getCurrentIcon()),
               ),
-            ]),
+            ],
           ),
-          Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                children: [
+          body: Center(
+              child: GridView.count(
+            crossAxisCount: 2,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Column(children: [
                   FutureBuilder(
-                      future: storage.downloadURL('img$counter2.jpg'),
+                      future: storage.downloadURL('img$counter1.jpg'),
                       builder: (BuildContext context,
                           AsyncSnapshot<String> snapshot) {
                         if (snapshot.connectionState == ConnectionState.done &&
@@ -162,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         return Container();
                       }),
                   Center(
-                      child: Text(counter.getName(counter2),
+                      child: Text(counter.getName(counter1),
                           style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -171,17 +113,63 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          counter.incrementCounter1();
+                          counter.incrementCounter2();
                         });
                         print(counter1);
                       },
-                      child: Text('SMASH ${counter.getName(counter2)}'),
+                      child: Text('SMASH ${counter.getName(counter1)}'),
                     ),
-                  )
-                ],
-              )),
-        ],
-      )),
-    );
+                  ),
+                ]),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(40.0),
+                  child: Column(
+                    children: [
+                      FutureBuilder(
+                          future: storage.downloadURL('img$counter2.jpg'),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              return Container(
+                                width: 400,
+                                height: 400,
+                                child: Image.network(
+                                  snapshot.data!,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            }
+                            if (snapshot.connectionState ==
+                                    ConnectionState.waiting ||
+                                !snapshot.hasData) {
+                              return CircularProgressIndicator();
+                            }
+                            return Container();
+                          }),
+                      Center(
+                          child: Text(counter.getName(counter2),
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                              ))),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              counter.incrementCounter1();
+                            });
+                            print(counter1);
+                          },
+                          child: Text('SMASH ${counter.getName(counter2)}'),
+                        ),
+                      )
+                    ],
+                  )),
+            ],
+          )),
+        ));
   }
 }

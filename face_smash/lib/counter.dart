@@ -24,19 +24,19 @@ class Counter {
     'Paul Carabas'
   ];
   Future<void> incrementCounter1() async {
-    if (counter == counter2) counter++;
     if (counter >= MAX_NUMBER)
       counter = 1;
     else
       counter++;
+    if (counter == counter2) counter++;
   }
 
   Future<void> incrementCounter2() async {
-    if (counter == counter2) counter2++;
     if (counter2 >= MAX_NUMBER)
       counter2 = 1;
     else
       counter2++;
+    if (counter == counter2) counter2++;
   }
 
   Future<void> decrementCounter() async {

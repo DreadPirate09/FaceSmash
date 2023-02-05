@@ -24,6 +24,23 @@ void main() async {
   runApp(const MyApp());
 }
 
+bool _iconBool = true;
+
+IconData _iconLight = Icons.wb_sunny;
+IconData _iconDark = Icons.nights_stay;
+
+ThemeData _lightTheme = ThemeData(
+  primarySwatch: Colors.amber,
+  brightness: Brightness.light,
+);
+
+ThemeData _darkTheme = ThemeData(
+  primarySwatch: Colors.red,
+  brightness: Brightness.dark,
+);
+
+ThemeData _theme1 = _lightTheme;
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -32,9 +49,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: _iconBool ? _lightTheme : _darkTheme,
       home: const MyHomePage(title: 'Face Smash Poli'),
     );
   }
@@ -49,14 +64,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
-
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
@@ -69,6 +76,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _iconBool = !_iconBool;
+              });
+              print(_iconBool);
+            },
+            icon: Icon(_iconBool ? _iconDark : _iconLight),
+          ),
+        ],
       ),
       body: Center(
           child: GridView.count(

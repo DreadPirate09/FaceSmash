@@ -1,7 +1,8 @@
-import 'dart:html';
-
+import 'dart:convert';
+import 'dart:io';
 import 'package:face_smash/aparence/themeStyles.dart';
 import 'package:face_smash/names_mapper.dart';
+import 'package:face_smash/services/download_names.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -47,11 +48,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Reference futureFiles;
+  late File file = File('names.csv');
+
   @override
   Widget build(BuildContext context) {
     final Storage storage = Storage();
     final Counter counter = Counter.instance;
     final NamesMapper names = NamesMapper();
+    Names().doSomeStuff();
     String name1 = "none";
     String name2 = "none";
     int counter1 = counter.get1() as int;

@@ -84,7 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisCount: 2,
             children: [
               Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.only(
+                    left: 100.0, top: 100.0, right: 0.0, bottom: 50.0),
                 child: Column(children: [
                   FutureBuilder(
                       future: storage.downloadURL('img$counter1.jpg'),
@@ -128,7 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ]),
               ),
               Padding(
-                  padding: const EdgeInsets.all(40.0),
+                  padding: const EdgeInsets.only(
+                      left: 0.0, top: 100.0, right: 0.0, bottom: 50.0),
                   child: Column(
                     children: [
                       FutureBuilder(
